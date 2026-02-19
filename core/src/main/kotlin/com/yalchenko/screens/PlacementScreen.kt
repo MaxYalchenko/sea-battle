@@ -26,10 +26,26 @@ class PlacementScreen(game: MainGame) : BaseScreen(game) {
     private val basePaperWidth = 1300f
     private val basePaperHeight = 720f
 
+    // Список для хранения тестовых кнопок
+    private val testButtons = mutableListOf<GameButton>()
+
     init {
         createMenu()
+        spawnGridButtons()
     }
 
+    private fun spawnGridButtons() {
+        // Заполняем всё поле кнопками
+        for (row in 0 until grid.rows) {
+            for (col in 0 until grid.cols) {
+                val btn = GameButton(game.atlasVanil, game.atlasClick, "button1") {
+                    println("Нажата клетка: $row, $col")
+                }
+                testButtons.add(btn)
+                stage.addActor(btn)
+            }
+        }
+    }
     private fun createMenu() {
 
         val startButton = GameButton(game.atlasVanil, game.atlasClick, "button1") {
@@ -44,12 +60,15 @@ class PlacementScreen(game: MainGame) : BaseScreen(game) {
         stage.addActor(table)
     }
 
+
+
     override fun render(delta: Float){
         clearScreen()
         //Рисуем фон (дерево)
         background.renderBackground(batch)
         //Возвращаем viewport для stage
         viewport.apply()
+
         //Рисуем stage(лист)
         stage.act(delta)
         stage.draw()
@@ -61,6 +80,27 @@ class PlacementScreen(game: MainGame) : BaseScreen(game) {
 
         val scaleX = paper.width / basePaperWidth
         val scaleY = paper.height / basePaperHeight
+
+        // 2. Обновляем положение и размер каждой кнопки согласно сетке
+        var index = 0
+        for (row in 0 until grid.rows) {
+            for (col in 0 until grid.cols) {
+                val cellPos = grid.getCellPosition(row, col)
+                val btn = testButtons[index]
+
+                // Размер кнопки подгоняем под размер клетки с учетом масштаба
+                btn.setSize(grid.cellWidth * scaleX, grid.cellHeight * scaleY)
+
+                // Позиция: угол бумаги + (смещение клетки * масштаб)
+                btn.setPosition(
+                    paperCoords.x + (cellPos.x * scaleX),
+                    paperCoords.y + (cellPos.y * scaleY)
+                )
+                index++
+            }
+        }
+        stage.act(delta)
+        stage.draw()
     }
 
     override fun dispose() {
