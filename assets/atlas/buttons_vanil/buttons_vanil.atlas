@@ -1,0 +1,11 @@
+buttons_vanil.png
+size:1024,256
+repeat:none
+button1
+bounds:491,2,232,221
+button2
+bounds:248,14,241,209
+button3
+bounds:725,11,216,212
+button4
+bounds:2,13,244,210
