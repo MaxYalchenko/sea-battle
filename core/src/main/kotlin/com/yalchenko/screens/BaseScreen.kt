@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.ExtendViewport
@@ -12,15 +13,12 @@ import com.yalchenko.MainGame
 
 abstract class BaseScreen(protected val game: MainGame) : ScreenAdapter() {
 
-    // Пользуемся общим батчем
     protected val batch = game.batch
 
-    // Настраиваем общую камеру и вьюпорт
     protected val viewport = ExtendViewport(game.WORLD_WIDTH, game.WORLD_HEIGHT)
     protected val stage = Stage(viewport, batch)
 
     override fun show() {
-        // Автоматически включаем ввод для Stage при переключении на экран
         Gdx.input.inputProcessor = stage
     }
 

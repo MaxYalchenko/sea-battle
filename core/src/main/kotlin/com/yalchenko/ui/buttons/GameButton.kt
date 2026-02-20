@@ -13,7 +13,6 @@ class GameButton(
     onClick: () -> Unit
 ):  ImageButton(createStyle(atlasUp, atlasDown, regionName)){
     init {
-        // Добавляем слушатель клика
         addListener(object : ClickListener() {
             override fun clicked(event: InputEvent?, x: Float, y: Float) {
                 onClick()

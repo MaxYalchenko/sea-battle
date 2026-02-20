@@ -7,18 +7,25 @@ import com.yalchenko.ui.buttons.GameButton
 
 class MenuScreen(game: MainGame) : BaseScreen(game) {
 
-    private val background = MenuBackground(stage)
+    private val background = MenuBackground(
+        stage,
+        game.woodTexture,
+        game.paperTexture)
 
     init {
         val table = Table()
         table.setFillParent(true)
 
-        // Используем универсальную кнопку из атласа
-        val startButton = GameButton(game.atlasVanil, game.atlasClick, "button1") {
-            game.screen = PlacementScreen(game)
+        // Кнопка Старт (button4)
+        val startButton = GameButton(
+            game.atlasVanil,
+            game.atlasClick,
+            "button4"
+        ) {
+            game.screen = game.placementScreen
         }
 
-        table.add(startButton).size(300f, 150f)
+        table.add(startButton).size(400f, 200f).center()
         stage.addActor(table)
     }
 
@@ -36,6 +43,5 @@ class MenuScreen(game: MainGame) : BaseScreen(game) {
 
     override fun dispose() {
         super.dispose()
-        background.dispose()
     }
 }

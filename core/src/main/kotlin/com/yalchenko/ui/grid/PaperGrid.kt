@@ -9,14 +9,20 @@ class PaperGrid(
     var cellHeight: Float,
 
     val rows: Int,
-    val cols: Int
+    val cols: Int,
+
 ) {
-    // Перевод логических координат в экранные
-    fun getCellPosition(row: Int, col: Int): Vector2{
-        // Столбцы (col) идут по горизонтали -> умножаем на ширину
-        val x = startX + col * cellWidth
-        // Строки (row) идут по вертикали -> умножаем на высоту
-        val y = startY + row * cellHeight
-        return Vector2(x,y)
+    var worldStartX = 0f
+    var worldStartY = 0f
+
+    var worldCellWidth = 0f
+    var worldCellHeight = 0f
+
+    fun getWorldCellPosition(row: Int, col: Int): Vector2 {
+        return Vector2(
+            worldStartX + col * worldCellWidth,
+            worldStartY + row * worldCellHeight
+        )
     }
+
 }
